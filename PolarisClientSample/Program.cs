@@ -38,7 +38,7 @@ namespace PolarisClientSample
         static void Main(string[] args)
         {
             Console.WriteLine("Point One Navigation Polaris Demo Application");
-            Console.WriteLine("Version" + VERSION_MAJOR + "." + VERSION_MINOR);            
+            Console.WriteLine("Version " + VERSION_MAJOR + "." + VERSION_MINOR);            
             StartPolarisClient();
             StartServer();
 
