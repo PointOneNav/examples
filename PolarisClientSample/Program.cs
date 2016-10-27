@@ -110,6 +110,9 @@ namespace PolarisClientSample
                     server = new TcpListener(IPAddress.Any, 9000);
                     server.Start();
                     Console.WriteLine("Server listening on port " + ((IPEndPoint)server.LocalEndpoint).Port.ToString());
+                    Console.WriteLine("Connect in uCenter using Reciever->Differential GNSS Interface");
+                    Console.WriteLine("Select 'Internet Connection' setting Server to 127.0.0.1 and port to " + ((IPEndPoint)server.LocalEndpoint).Port.ToString());
+
                     while (running)
                     {                        
                         //wait for incoming connections
