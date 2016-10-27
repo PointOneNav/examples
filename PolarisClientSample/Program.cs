@@ -17,6 +17,9 @@ namespace PolarisClientSample
     /// </summary>
     class Program
     {
+        const int VERSION_MAJOR = 1;
+        const int VERSION_MINOR = 0;
+
         const string POLARIS_SERVER = "polaris.pointonenav.com";
         const int POLARIS_PORT = 8088;
 
@@ -34,11 +37,11 @@ namespace PolarisClientSample
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            Console.WriteLine("Point One Navigation Polaris Demo Application");            
+            Console.WriteLine("Point One Navigation Polaris Demo Application");
+            Console.WriteLine("Version" + VERSION_MAJOR + "." + VERSION_MINOR);            
             StartPolarisClient();
             StartServer();
 
-            Console.WriteLine("Enter q + ENTER to quit.");
             while (Console.ReadKey().KeyChar != 'q')
                 continue;
 
@@ -67,7 +70,8 @@ namespace PolarisClientSample
             }
             Console.WriteLine("Sending Auth....");
             SendAuth(polarisClient);
-            Console.WriteLine("Sending Position....");
+            Console.WriteLine("\nSending Position:");
+            Console.WriteLine(ECEF_X + "," + ECEF_Y + "," + ECEF_Z + " (ECEF)");
             SendPosition(ECEF_X, ECEF_Y, ECEF_Z, polarisClient);
 
             //start a thread to manage the rx from Polaris. This is where data is then forwarded to all connected clients.
@@ -109,9 +113,11 @@ namespace PolarisClientSample
                 {
                     server = new TcpListener(IPAddress.Any, 9000);
                     server.Start();
-                    Console.WriteLine("Server listening on port " + ((IPEndPoint)server.LocalEndpoint).Port.ToString());
-                    Console.WriteLine("Connect in uCenter using Reciever->Differential GNSS Interface");
+                    Console.WriteLine("\nServer listening on port " + ((IPEndPoint)server.LocalEndpoint).Port.ToString());
+                    Console.WriteLine("\nConnect in uCenter using Reciever->Differential GNSS Interface");
                     Console.WriteLine("Select 'Internet Connection' setting Server to 127.0.0.1 and port to " + ((IPEndPoint)server.LocalEndpoint).Port.ToString());
+                    Console.WriteLine("\nEnter q to quit.");
+
 
                     while (running)
                     {                        
@@ -128,7 +134,7 @@ namespace PolarisClientSample
                 catch (Exception e)
                 {
                     if (e is SocketException && (e as SocketException).SocketErrorCode == SocketError.Interrupted)
-                        Console.WriteLine("Shutting down server for exit.");
+                        Console.WriteLine("\nShutting down server for exit.");
                     else
                         Console.WriteLine("Server socket error. " + e.ToString());
                     return;
